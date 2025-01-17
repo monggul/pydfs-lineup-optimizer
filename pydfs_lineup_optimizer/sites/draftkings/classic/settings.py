@@ -2,10 +2,9 @@ from pydfs_lineup_optimizer.settings import BaseSettings, LineupPosition
 from pydfs_lineup_optimizer.constants import Sport, Site
 from pydfs_lineup_optimizer.sites.sites_registry import SitesRegistry
 from pydfs_lineup_optimizer.lineup_printer import IndividualSportLineupPrinter
-from pydfs_lineup_optimizer.sites.draftkings.classic.importer import DraftKingsCSVImporter
+from pydfs_lineup_optimizer.sites.draftkings.classic.importer import DraftKingsCSVImporter, DraftKingsSingleStatsCSVImporter
 from pydfs_lineup_optimizer.sites.draftkings.captain_mode.importer import DraftKingsCaptainModeCSVImporter
 from pydfs_lineup_optimizer.rules import DraftKingsBaseballRosterRule
-
 
 class DraftKingsSettings(BaseSettings):
     site = Site.DRAFTKINGS
@@ -25,9 +24,8 @@ class DraftKingsBasketballSettings(DraftKingsSettings):
         LineupPosition('C', ('C', )),
         LineupPosition('G', ('PG', 'SG')),
         LineupPosition('F', ('SF', 'PF')),
-        LineupPosition('UTIL', ('PG', 'SG', 'PF', 'SF', 'C'))
+        LineupPosition('UTIL', ('PG', 'SG','SF', 'PF', 'C'))
     ]
-
 
 @SitesRegistry.register_settings
 class DraftKingsWNBASettings(DraftKingsSettings):
@@ -40,7 +38,7 @@ class DraftKingsWNBASettings(DraftKingsSettings):
         LineupPosition('F', ('SF', 'PF')),
         LineupPosition('F', ('SF', 'PF')),
         LineupPosition('UTIL', ('PG', 'SG', 'PF', 'SF', 'C'))
-    ]    
+    ]
 
 
 @SitesRegistry.register_settings
@@ -55,10 +53,25 @@ class DraftKingsFootballSettings(DraftKingsSettings):
         LineupPosition('WR', ('WR',)),
         LineupPosition('WR', ('WR',)),
         LineupPosition('TE', ('TE',)),
-        LineupPosition('FLEX', ('WR', 'RB', 'TE')),
+        LineupPosition('FLEX', ('RB','WR','TE',)),
         LineupPosition('DST', ('DST',))
     ]
 
+@SitesRegistry.register_settings
+class DraftKingsFootballSuperFlexSettings(DraftKingsSettings):
+    sport = Sport.FOOTBALLSF
+    min_games = 2
+    positions = [
+        LineupPosition('QB', ('QB',)),
+        LineupPosition('RB', ('RB',)),
+        LineupPosition('RB', ('RB',)),
+        LineupPosition('WR', ('WR',)),
+        LineupPosition('WR', ('WR',)),
+        LineupPosition('WR', ('WR',)),
+        LineupPosition('TE', ('TE',)),
+        LineupPosition('FLEX', ('RB','WR','TE',)),
+        LineupPosition('FLEX', ('RB','WR','TE','QB',)),
+    ]
 
 @SitesRegistry.register_settings
 class DraftKingsHockeySettings(DraftKingsSettings):
@@ -74,7 +87,7 @@ class DraftKingsHockeySettings(DraftKingsSettings):
         LineupPosition('D', ('D', )),
         LineupPosition('D', ('D', )),
         LineupPosition('G', ('G',)),
-        LineupPosition('UTIL', ('LW', 'RW', 'C', 'D'))
+        LineupPosition('UTIL', ('LW', 'RW', 'C', ))
     ]
 
 
@@ -97,7 +110,6 @@ class DraftKingsBaseballSettings(DraftKingsSettings):
         LineupPosition('OF', ('OF', )),
     ]
 
-
 @SitesRegistry.register_settings
 class DraftKingsGolfSettings(DraftKingsSettings):
     sport = Sport.GOLF
@@ -117,13 +129,13 @@ class DraftKingsSoccerSettings(DraftKingsSettings):
     sport = Sport.SOCCER
     min_teams = 3
     positions = [
+        LineupPosition('F', ('F', )),
+        LineupPosition('F', ('F', )),
+        LineupPosition('M', ('M', )),
+        LineupPosition('M', ('M', )),
+        LineupPosition('D', ('D', )),
+        LineupPosition('D', ('D', )),
         LineupPosition('GK', ('GK', )),
-        LineupPosition('D', ('D', )),
-        LineupPosition('D', ('D', )),
-        LineupPosition('M', ('M', )),
-        LineupPosition('M', ('M', )),
-        LineupPosition('F', ('F', )),
-        LineupPosition('F', ('F', )),
         LineupPosition('UTIL', ('D', 'M', 'F', )),
     ]
 
@@ -215,4 +227,45 @@ class DraftKingsCSGOSettings(DraftKingsSettings):
         LineupPosition('FLEX', ('FLEX',)),
         LineupPosition('FLEX', ('FLEX',)),
         LineupPosition('FLEX', ('FLEX',)),
+    ]
+
+@SitesRegistry.register_settings
+class DraftKingsXFLSettings(DraftKingsSettings):
+    sport = Sport.XFL
+    min_teams = 2
+    positions = [
+        LineupPosition('QB', ('QB', )),
+        LineupPosition('RB', ('RB', )),
+        LineupPosition('WR/TE', ('WR', 'TE', )),
+        LineupPosition('WR/TE', ('WR', 'TE', )),
+        LineupPosition('FLEX', ('RB', 'WR', 'TE', )),
+        LineupPosition('FLEX', ('RB', 'WR', 'TE', )),
+        LineupPosition('DST', ('DST', )),
+    ]
+
+@SitesRegistry.register_settings
+class DraftKingsCBBSettings(DraftKingsSettings):
+    sport = Sport.CBB
+    min_games = 2
+    positions = [
+        LineupPosition('G', ('G', )),
+        LineupPosition('G', ('G', )),
+        LineupPosition('G', ('G', )),
+        LineupPosition('F', ('F', )),
+        LineupPosition('F', ('F', )),
+        LineupPosition('F', ('F', )),
+        LineupPosition('UTIL', ('G','F',)),
+        LineupPosition('UTIL', ('G','F',)),
+    ]
+
+@SitesRegistry.register_settings
+class DraftKingsSingleStatsSettings(DraftKingsSettings):
+    csv_importer = DraftKingsSingleStatsCSVImporter
+    sport = Sport.SS
+    budget = None
+    max_from_one_team = 2
+    positions = [
+        LineupPosition('UTIL', ('UTIL','FLEX',)),
+        LineupPosition('UTIL', ('UTIL','FLEX',)),
+        LineupPosition('UTIL', ('UTIL','FLEX',)),
     ]

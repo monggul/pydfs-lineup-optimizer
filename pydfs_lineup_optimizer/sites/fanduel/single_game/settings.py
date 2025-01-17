@@ -23,10 +23,10 @@ class FanDuelSingleGameFootballSettings(FanDuelSingleGameSettings):
     extra_rules = [FanduelSingleGameMaxQBRule]
     positions = [
         LineupPosition('MVP', ('MVP', )),
-        LineupPosition('UTIL', ('QB', 'WR', 'RB', 'TE', 'K')),
-        LineupPosition('UTIL', ('QB', 'WR', 'RB', 'TE', 'K')),
-        LineupPosition('UTIL', ('QB', 'WR', 'RB', 'TE', 'K')),
-        LineupPosition('UTIL', ('QB', 'WR', 'RB', 'TE', 'K')),
+        LineupPosition('UTIL', ('QB', 'WR', 'RB', 'TE', 'K', 'D')),
+        LineupPosition('UTIL', ('QB', 'WR', 'RB', 'TE', 'K', 'D')),
+        LineupPosition('UTIL', ('QB', 'WR', 'RB', 'TE', 'K', 'D')),
+        LineupPosition('UTIL', ('QB', 'WR', 'RB', 'TE', 'K', 'D')),
     ]
 
 
@@ -59,6 +59,7 @@ class FanDuelSingleGameLOLSettings(FanDuelSingleGameSettings):
 @SitesRegistry.register_settings
 class FanDuelSingleGameBaseballSettings(FanDuelSingleGameSettings):
     sport = Sport.BASEBALL
+    budget = 35000
     csv_importer = build_fanduel_single_game_importer(mvp=True, star=True, pro=False)
     positions = [
         LineupPosition('MVP', ('MVP', )),
@@ -72,6 +73,7 @@ class FanDuelSingleGameBaseballSettings(FanDuelSingleGameSettings):
 @SitesRegistry.register_settings
 class FanDuelSingleGameHockeySettings(FanDuelSingleGameSettings):
     sport = Sport.HOCKEY
+    budget = 55000
     csv_importer = FanDuelSingleGameHockeyCSVImporter
     positions = [
         LineupPosition('CAPTAIN', ('CAPTAIN', )),
@@ -79,4 +81,30 @@ class FanDuelSingleGameHockeySettings(FanDuelSingleGameSettings):
         LineupPosition('UTIL', ('C', 'W', 'D')),
         LineupPosition('UTIL', ('C', 'W', 'D')),
         LineupPosition('UTIL', ('C', 'W', 'D')),
+    ]
+
+@SitesRegistry.register_settings
+class FanDuelSingleGameSoccerSettings(FanDuelSingleGameSettings):
+    sport = Sport.SOCCER
+    budget = 50
+    csv_importer = FanDuelSingleGameHockeyCSVImporter
+    positions = [
+        LineupPosition('CAPTAIN', ('FWD','MID', )),
+        LineupPosition('F/M', ('FWD','MID', )),
+        LineupPosition('F/M', ('FWD','MID', )),
+        LineupPosition('F/M', ('FWD','MID', )),
+        LineupPosition('DEF', ('DEF',)),
+    ]
+
+@SitesRegistry.register_settings
+class FanDuelSingleGameCBBSettings(FanDuelSingleGameSettings):
+    sport = Sport.CBB
+    budget = 50000
+    csv_importer = build_fanduel_single_game_importer(mvp=True, star=True, pro=True)
+    positions = [
+        LineupPosition('MVP', ('MVP', )),
+        LineupPosition('STAR', ('STAR', )),
+        LineupPosition('PRO', ('PRO', )),
+        LineupPosition('UTIL', ('G','F',)),
+        LineupPosition('UTIL', ('G','F',)),
     ]

@@ -1,7 +1,7 @@
 from pydfs_lineup_optimizer.settings import BaseSettings, LineupPosition
 from pydfs_lineup_optimizer.constants import Sport, Site
 from pydfs_lineup_optimizer.sites.sites_registry import SitesRegistry
-from pydfs_lineup_optimizer.sites.yahoo.importer import YahooCSVImporter
+from pydfs_lineup_optimizer.sites.yahoo.classic.importer import YahooCSVImporter
 from pydfs_lineup_optimizer.lineup_exporter import YahooCSVLineupExporter
 
 
@@ -19,12 +19,12 @@ class YahooBasketballSettings(YahooSettings):
     positions = [
         LineupPosition('PG', ('PG', )),
         LineupPosition('SG', ('SG', )),
+        LineupPosition('G', ('PG',)),
         LineupPosition('SF', ('SF', )),
         LineupPosition('PF', ('PF', )),
-        LineupPosition('C', ('C', )),
-        LineupPosition('G', ('PG', 'SG')),
         LineupPosition('F', ('SF', 'PF')),
-        LineupPosition('UTIL', ('PG', 'SG', 'SF', 'PF', 'C'))
+        LineupPosition('C', ('C', )),
+        LineupPosition('UTIL', ('PG','C'))
     ]
 
 
@@ -33,13 +33,13 @@ class YahooFootballSettings(YahooSettings):
     sport = Sport.FOOTBALL
     positions = [
         LineupPosition('QB', ('QB', )),
-        LineupPosition('WR', ('WR', )),
-        LineupPosition('WR', ('WR', )),
-        LineupPosition('WR', ('WR', )),
         LineupPosition('RB', ('RB', )),
         LineupPosition('RB', ('RB', )),
+        LineupPosition('WR', ('WR', )),
+        LineupPosition('WR', ('WR', )),
+        LineupPosition('WR', ('WR', )),
         LineupPosition('TE', ('TE', )),
-        LineupPosition('FLEX', ('WR', 'RB', 'TE')),
+        LineupPosition('FLEX', ('RB','WR',)),
         LineupPosition('DEF', ('DEF', ))
     ]
 

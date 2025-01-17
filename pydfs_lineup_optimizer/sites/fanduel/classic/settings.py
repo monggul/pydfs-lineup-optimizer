@@ -5,7 +5,7 @@ from pydfs_lineup_optimizer.sites.sites_registry import SitesRegistry
 from pydfs_lineup_optimizer.lineup_printer import IndividualSportLineupPrinter
 from pydfs_lineup_optimizer.rules import OptimizerRule, FanduelBaseballRosterRule
 from pydfs_lineup_optimizer.sites.fanduel.classic.importer import FanDuelCSVImporter, FanDuelLOLCSVImporter, \
-    FanDuelMVPCSVImporter
+    FanDuelMVPCSVImporter, FanDuelSingleStatsCSVImporter
 from pydfs_lineup_optimizer.lineup_exporter import FanDuelCSVLineupExporter
 
 
@@ -45,7 +45,7 @@ class FanDuelFootballSettings(FanDuelSettings):
         LineupPosition('WR', ('WR', )),
         LineupPosition('WR', ('WR', )),
         LineupPosition('TE', ('TE', )),
-        LineupPosition('FLEX', ('RB', 'WR', 'TE')),
+        LineupPosition('FLEX', ('RB','WR','TE',)),
         LineupPosition('DEF', ('D', )),
     ]
 
@@ -61,8 +61,8 @@ class FanDuelHockeySettings(FanDuelSettings):
         LineupPosition('W', ('W', )),
         LineupPosition('D', ('D', )),
         LineupPosition('D', ('D', )),
-        LineupPosition('UTIL', ('C', 'W', 'D')),
-        LineupPosition('UTIL', ('C', 'W', 'D')),
+        LineupPosition('UTIL', ('C', 'W',)),
+        LineupPosition('UTIL', ('C', 'W',)),
         LineupPosition('G', ('G', )),
     ]
 
@@ -134,8 +134,8 @@ class FanDuelLOLSettings(FanDuelSettings):
         LineupPosition('SUP', ('SUP',)),
         LineupPosition('TEAM', ('TEAM',)),
     ]
-    
-    
+
+
 @SitesRegistry.register_settings
 class FanDuelNascarSettings(FanDuelSettings):
     sport = Sport.NASCAR
@@ -169,3 +169,56 @@ class FanDuelMMASettings(FanDuelSettings):
         LineupPosition('F', ('F', )),
     ]
 
+@SitesRegistry.register_settings
+class FanDuelSOCCERSettings(FanDuelSettings):
+    sport = Sport.SOCCER
+    budget = 100
+    positions = [
+        LineupPosition('F/M', ('FWD','MID', )),
+        LineupPosition('F/M', ('FWD','MID', )),
+        LineupPosition('F/M', ('FWD','MID', )),
+        LineupPosition('F/M', ('FWD','MID', )),
+        LineupPosition('D', ('DEF', )),
+        LineupPosition('D', ('DEF', )),
+        LineupPosition('G', ('GK', )),
+    ]
+
+@SitesRegistry.register_settings
+class FanDuelCBBSettings(FanDuelSettings):
+    sport = Sport.CBB
+    budget = 50000
+    positions = [
+        LineupPosition('G', ('G', )),
+        LineupPosition('G', ('G', )),
+        LineupPosition('G', ('G', )),
+        LineupPosition('G', ('G', )),
+        LineupPosition('F', ('F', )),
+        LineupPosition('F', ('F', )),
+        LineupPosition('F', ('F', )),
+        LineupPosition('UTIL', ('G','F',)),
+    ]
+
+@SitesRegistry.register_settings
+class FanDuelBaseballSingleStatsSettings(FanDuelSettings):
+    csv_importer = FanDuelSingleStatsCSVImporter
+    sport = Sport.BASEBALLSS
+    max_from_one_team = 2
+    min_teams = None
+    positions = [
+        LineupPosition('UTIL', ('1B', '2B', '3B', 'SS', 'C', 'OF')),
+        LineupPosition('UTIL', ('1B', '2B', '3B', 'SS', 'C', 'OF')),
+        LineupPosition('UTIL', ('1B', '2B', '3B', 'SS', 'C', 'OF')),
+    ]
+
+@SitesRegistry.register_settings
+class FanDuelFootballSingleStatsSettings(FanDuelSettings):
+    budget = None
+    max_from_one_team = 2
+    min_teams = None  # type: Optional[int]
+    csv_importer = FanDuelSingleStatsCSVImporter
+    sport = Sport.FOOTBALLSS
+    positions = [
+        LineupPosition('UTIL', ('UTIL','QB','RB','WR','TE',)),
+        LineupPosition('UTIL', ('UTIL','QB','RB','WR','TE',)),
+        LineupPosition('UTIL', ('UTIL','QB','RB','WR','TE',)),
+    ]

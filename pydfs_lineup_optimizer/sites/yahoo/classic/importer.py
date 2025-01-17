@@ -1,4 +1,5 @@
 import csv
+from copy import deepcopy
 from typing import Dict, Tuple
 from pydfs_lineup_optimizer.exceptions import LineupOptimizerIncorrectCSV
 from pydfs_lineup_optimizer.lineup_importer import CSVImporter
@@ -43,4 +44,17 @@ class YahooCSVImporter(CSVImporter):  # pragma: nocover
                 except KeyError:
                     raise LineupOptimizerIncorrectCSV
                 players.append(player)
+        return players
+
+class YahooMVPCSVImporter(YahooCSVImporter):
+    def import_players(self):
+        players = super().import_players()
+        mvps = []
+        for player in players:
+            mvp_player = deepcopy(player)
+            mvp_player.fppg *= 1.5
+            mvp_player._original_positions = player.positions
+            mvp_player.positions = ('MVP', )
+            mvps.append(mvp_player)
+        players.extend(mvps)
         return players

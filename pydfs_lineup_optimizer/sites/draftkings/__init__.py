@@ -10,4 +10,11 @@ __all__ = [
     'DraftKingsSoccerSettings', 'DraftKingsCanadianFootballSettings', 'DraftKingsLOLSettings',
     'DraftKingsCaptainModeCSVImporter', 'DraftKingsCaptainModeFootballSettings',
     'DraftKingsCaptainModeBasketballSettings', 'DraftKingsTiersBasketballSettings',
+    'DraftKingsCaptainModeGolfSettings',
+    'DraftKingsCaptainModeF1Settings',
+    'DraftKingsCaptainModeMMASettings',
+    'DraftKingsXFLSettings', 'DraftKingsCBBSettings', 'DraftKingsCaptainModeCBBSettings',
+    'DraftKingsCaptainModeLOLSettings',
+    'DraftKingsFootballSuperFlexSettings', 'DraftKingsSingleStatsSettings',
+
 ]

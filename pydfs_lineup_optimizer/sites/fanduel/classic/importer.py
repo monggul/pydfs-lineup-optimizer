@@ -110,3 +110,30 @@ class FanDuelLOLCSVImporter(FanDuelCSVImporter):
             stars.append(star_player)
         players.extend(stars)
         return players
+
+class FanDuelSingleStatsCSVImporter(FanDuelCSVImporter):
+    def _row_to_player(self, row: Dict) -> Player:
+        try:
+            away_team, home_team = row.get('Game', '').split('@')
+            game_info = self._games.get((home_team, away_team))
+            if not game_info:
+                game_info = GameInfo(home_team, away_team, None)
+                self._games[(home_team, away_team)] = game_info
+        except ValueError:
+            game_info = None
+        try:
+            player = Player(
+                row['Id'],
+                row['First Name'],
+                row['Last Name'],
+                row['Position'].split('/'),
+                row['Team'],
+                0,
+                float(row['FPPG'] or 0),
+                is_injured=True if row['Injury Indicator'].strip() else False,
+                game_info=game_info,
+                **self.get_player_extra(row)
+            )
+        except KeyError:
+            raise LineupOptimizerIncorrectCSV
+        return player

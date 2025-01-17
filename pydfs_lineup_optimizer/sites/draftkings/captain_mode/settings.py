@@ -6,11 +6,11 @@ from pydfs_lineup_optimizer.sites.draftkings.captain_mode.importer import DraftK
 
 POSITIONS_WITH_FLEX = [
     LineupPosition('CPT', ('CPT',)),
-    LineupPosition('FLEX', ('FLEX',)),
-    LineupPosition('FLEX', ('FLEX',)),
-    LineupPosition('FLEX', ('FLEX',)),
-    LineupPosition('FLEX', ('FLEX',)),
-    LineupPosition('FLEX', ('FLEX',)),
+    LineupPosition('FLEX', ('FLEX','F',)),
+    LineupPosition('FLEX', ('FLEX','F',)),
+    LineupPosition('FLEX', ('FLEX','F',)),
+    LineupPosition('FLEX', ('FLEX','F',)),
+    LineupPosition('FLEX', ('FLEX','F',)),
 ]
 
 
@@ -55,6 +55,17 @@ class DraftKingsLOLSettings(DraftKingsCaptainModeSettings):
         LineupPosition('TEAM', ('TEAM', )),
     ]
 
+@SitesRegistry.register_settings
+class DraftKingsCaptainModeLOLSettings(DraftKingsCaptainModeSettings):
+    sport = Sport.LEAGUE_OF_LEGENDS_SINGLE
+    max_from_one_team = 2
+    positions = [
+        LineupPosition('CPT', ('CPT','ADC','MID',)),
+        LineupPosition('CPT', ('CPT','ADC','MID','JNG','TOP',)),
+        LineupPosition('FLEX', ('FLEX','ADC','MID','JNG','TOP','TEAM','SUP',)),
+        LineupPosition('FLEX', ('FLEX','ADC','MID','JNG','TOP','TEAM','SUP',)),
+    ]
+
 
 @SitesRegistry.register_settings
 class DraftKingsCaptainModeBaseballSettings(DraftKingsCaptainModeSettings):
@@ -77,3 +88,37 @@ class DraftKingsCaptainModeNHLSettings(DraftKingsCaptainModeSettings):
     sport = Sport.HOCKEY
     positions = POSITIONS_WITH_FLEX[:]
 
+@SitesRegistry.register_settings
+class DraftKingsCaptainModeMMASettings(DraftKingsCaptainModeSettings):
+    sport = Sport.MMA
+    max_from_one_team = None
+    positions = POSITIONS_WITH_FLEX[:]
+
+@SitesRegistry.register_settings
+class DraftKingsCaptainModeGolfSettings(DraftKingsCaptainModeSettings):
+    sport = Sport.GOLF
+    max_from_one_team = None
+    positions = [
+        LineupPosition('CPT', ('CPT',)),
+        LineupPosition('G', ('G',)),
+        LineupPosition('G', ('G',)),
+        LineupPosition('G', ('G',)),
+        LineupPosition('G', ('G',)),
+        LineupPosition('G', ('G',)),
+    ]
+@SitesRegistry.register_settings
+class DraftKingsCaptainModeF1Settings(DraftKingsCaptainModeSettings):
+    sport = Sport.F1
+    max_from_one_team = 2
+    positions = [
+        LineupPosition('CPT', ('CPT', )),
+        LineupPosition('D', ('D', )),
+        LineupPosition('D', ('D', )),
+        LineupPosition('D', ('D', )),
+        LineupPosition('D', ('D', )),
+        LineupPosition('CNSTR', ('CNSTR', )),
+    ]
+
+@SitesRegistry.register_settings
+class DraftKingsCaptainModeCBBSettings(DraftKingsCaptainModeSettings):
+    sport = Sport.CBB
