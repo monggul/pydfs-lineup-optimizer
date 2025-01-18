@@ -7,7 +7,7 @@ from pydfs_lineup_optimizer.solvers.exceptions import SolverException, SolverInf
 
 
 __all__ = ['Solver', 'PuLPSolver', 'SolverSign', 'SolverException', 'SolverInfeasibleSolutionException',
-           'get_default_solver', 'ORToolsSolver']
+           'get_default_solver']
 
 
 def get_default_solver() -> Type[Solver]:
@@ -20,7 +20,4 @@ def get_default_solver() -> Type[Solver]:
     elif solver_backend_name == 'mip':
         from pydfs_lineup_optimizer.solvers.mip_solver import MIPSolver
         return MIPSolver
-    elif solver_backend_name == 'ortools':
-        from pydfs_lineup_optimizer.solvers.ortools_solver import ORToolsSolver
-        return ORToolsSolver
     raise ValueError('Unknown solver backend: %s' % solver_backend)
